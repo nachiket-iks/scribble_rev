@@ -1,0 +1,71 @@
+name: scribble
+description: Clinical scribe mobile application for physicians
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  # State Management & DI (GetX handles both)
+  get: ^4.6.6
+  
+  # Navigation
+  go_router: ^12.0.0
+  
+  # Audio
+  record: ^5.0.4
+  just_audio: ^0.9.36
+  audio_session: ^0.1.18
+  
+  # Database
+  drift: ^2.14.0
+  drift_flutter: ^0.1.0
+  
+  # Storage
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  flutter_secure_storage: ^9.0.0
+  path_provider: ^2.1.1
+  
+  # Encryption & Hashing
+  encrypt: ^5.0.3
+  crypto: ^3.0.3
+  
+  # Concurrency
+  isolate_manager: ^5.1.0
+  chunked_stream: ^1.4.1
+  
+  # Background Services
+  flutter_background_service: ^5.0.5
+  flutter_foreground_task: ^6.1.3
+  wakelock_plus: ^1.1.4
+  
+  # Network
+  connectivity_plus: ^5.0.2
+  dio: ^5.4.0
+  
+  # Debug/Development
+  alice: ^0.4.2
+  
+  # Utilities
+  uuid: ^4.2.1
+  intl: ^0.18.1
+  rxdart: ^0.27.7
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+  
+  # Code generation (only what's actually needed)
+  build_runner: ^2.4.7
+  drift_dev: ^2.14.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/
