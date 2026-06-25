@@ -22,6 +22,8 @@ class RecordingController extends GetxController
   // State
   final Rx<Recording?> currentRecording = Rx<Recording?>(null);
   final RxList<Recording> pausedRecordings = <Recording>[].obs;
+  final Rx<({String title, String message})?> snackbarMessage = Rx(null);
+  final RxBool shouldNavigateBack = false.obs;
   
   RecordingController({
     required RecordingRepository recordingRepository,
@@ -61,10 +63,9 @@ class RecordingController extends GetxController
         // Check if there's an active recording
         final activeResult = await _recordingRepository.getActiveRecording();
         if (activeResult.isSuccess && activeResult.dataOrNull != null) {
-          Get.snackbar(
-            'Cannot Start',
-            'Please pause the active recording first',
-            snackPosition: SnackPosition.BOTTOM,
+          snackbarMessage.value = (
+            title: 'Cannot Start',
+            message: 'Please pause the active recording first',
           );
           return;
         }
@@ -90,10 +91,9 @@ class RecordingController extends GetxController
           
           logInfo('Started recording: ${recording.id}');
         } else {
-          Get.snackbar(
-            'Error',
-            result.failureOrNull?.message ?? 'Failed to start recording',
-            snackPosition: SnackPosition.BOTTOM,
+          snackbarMessage.value = (
+            title: 'Error',
+            message: result.failureOrNull?.message ?? 'Failed to start recording',
           );
         }
       },
@@ -131,10 +131,9 @@ class RecordingController extends GetxController
         // Check if there's an active recording
         final activeResult = await _recordingRepository.getActiveRecording();
         if (activeResult.isSuccess && activeResult.dataOrNull != null) {
-          Get.snackbar(
-            'Cannot Resume',
-            'Please pause the active recording first',
-            snackPosition: SnackPosition.BOTTOM,
+          snackbarMessage.value = (
+            title: 'Cannot Resume',
+            message: 'Please pause the active recording first',
           );
           return;
         }
@@ -173,16 +172,14 @@ class RecordingController extends GetxController
           if (result.isSuccess) {
             currentRecording.value = null;
             
-            Get.snackbar(
-              'Recording Stopped',
-              'Processing and encryption in progress',
-              snackPosition: SnackPosition.BOTTOM,
+            snackbarMessage.value = (
+              title: 'Recording Stopped',
+              message: 'Processing and encryption in progress',
             );
-            
+
             logInfo('Stopped recording: ${recording.id}');
-            
-            // Navigate back to home
-            Get.back();
+
+            shouldNavigateBack.value = true;
           }
         }
       },

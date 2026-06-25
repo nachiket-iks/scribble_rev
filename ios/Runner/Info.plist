@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Scribble</string>
+	<string>Scribble Rev</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -13,7 +13,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>scribble</string>
+	<string>scribble_rev</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -40,14 +40,6 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<!-- Microphone permission -->
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Scribble needs access to your microphone to record clinical encounters</string>
-	<!-- Background audio mode for recording -->
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>audio</string>
 	</array>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>

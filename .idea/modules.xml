@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/scribble_rev.iml" filepath="$PROJECT_DIR$/.idea/scribble_rev.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scribble_rev.iml" filepath="$PROJECT_DIR$/scribble_rev.iml" />
     </modules>
   </component>
 </project>

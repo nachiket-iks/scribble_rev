@@ -143,7 +143,7 @@ class StopRecordingUseCase {
       if (recording.status == RecordingStatus.stopped ||
           recording.status == RecordingStatus.done) {
         return Result.failure(
-          ValidationFailure(
+          const ValidationFailure(
             message: 'Recording is already stopped or done',
           ),
         );

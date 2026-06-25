@@ -130,7 +130,7 @@ class UploadChunkAggregator {
     required int totalCipherChunks,
     required int targetUploadSize,
   }) {
-    final avgCipherChunkSize = AppConstants.cipherChunkSize + 
+    const avgCipherChunkSize = AppConstants.cipherChunkSize + 
                                 AppConstants.nonceSize + 
                                 AppConstants.tagSize; // ~8KB with overhead
     

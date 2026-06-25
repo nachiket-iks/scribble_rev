@@ -20,7 +20,7 @@ class LoginScreen extends StatelessWidget {
     if (isIOS) {
       return CupertinoPageScaffold(
         navigationBar: const CupertinoNavigationBar(
-          middle: Text('Scribble'),
+          middle: Text('Login'),
         ),
         child: Center(
           child: CupertinoButton.filled(
@@ -32,7 +32,7 @@ class LoginScreen extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Scribble')),
+      appBar: AppBar(title: const Text('Login')),
       body: Center(
         child: FilledButton(
           onPressed: () => context.go('/home'),
@@ -54,7 +54,7 @@ class HomeScreen extends StatelessWidget {
     if (isIOS) {
       return CupertinoPageScaffold(
         navigationBar: const CupertinoNavigationBar(
-          middle: Text('Scribble'),
+          middle: Text('Home'),
         ),
         child: SafeArea(
           child: Padding(
@@ -93,7 +93,7 @@ class HomeScreen extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Scribble')),
+      appBar: AppBar(title: const Text('Home')),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -205,7 +205,7 @@ class HomeScreen extends StatelessWidget {
 }
 
 /// Recording Screen
-class RecordingScreen extends StatelessWidget {
+class RecordingScreen extends StatefulWidget {
   final String modeName;
 
   const RecordingScreen({
@@ -214,40 +214,68 @@ class RecordingScreen extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    final controller = Get.find<RecordingController>();
-    final mode = RecordingMode.values.firstWhere(
-      (m) => m.name == modeName,
+  State<RecordingScreen> createState() => _RecordingScreenState();
+}
+
+class _RecordingScreenState extends State<RecordingScreen> {
+  late final RecordingController _controller;
+  late final RecordingMode _mode;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = Get.find<RecordingController>();
+    _mode = RecordingMode.values.firstWhere(
+      (m) => m.name == widget.modeName,
       orElse: () => RecordingMode.recordFull,
     );
-    final isIOS = Platform.isIOS;
 
-    // Start recording on first build
+    ever(_controller.snackbarMessage, (msg) {
+      if (msg != null && mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('${msg.title}: ${msg.message}')),
+        );
+        _controller.snackbarMessage.value = null;
+      }
+    });
+
+    ever(_controller.shouldNavigateBack, (should) {
+      if (should && mounted) {
+        _controller.shouldNavigateBack.value = false;
+        context.go('/home');
+      }
+    });
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (controller.currentRecording.value == null) {
-        controller.startRecording(
+      if (_controller.currentRecording.value == null) {
+        _controller.startRecording(
           title: 'Recording ${DateTime.now()}',
-          mode: mode,
+          mode: _mode,
           clientCode: 'test_client',
         );
       }
     });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isIOS = Platform.isIOS;
 
     if (isIOS) {
       return CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
-          middle: Text(mode.displayName),
+          middle: Text(_mode.displayName),
         ),
         child: SafeArea(
-          child: Obx(() => _buildRecordingContent(controller, isIOS)),
+          child: Obx(() => _buildRecordingContent(_controller, isIOS)),
         ),
       );
     }
 
     return Scaffold(
-      appBar: AppBar(title: Text(mode.displayName)),
+      appBar: AppBar(title: Text(_mode.displayName)),
       body: SafeArea(
-        child: Obx(() => _buildRecordingContent(controller, isIOS)),
+        child: Obx(() => _buildRecordingContent(_controller, isIOS)),
       ),
     );
   }
@@ -367,11 +395,11 @@ class LibraryScreen extends StatelessWidget {
     final isIOS = Platform.isIOS;
 
     if (isIOS) {
-      return CupertinoPageScaffold(
-        navigationBar: const CupertinoNavigationBar(
+      return const CupertinoPageScaffold(
+        navigationBar: CupertinoNavigationBar(
           middle: Text('Library'),
         ),
-        child: const Center(
+        child: Center(
           child: Text('Recordings will appear here'),
         ),
       );

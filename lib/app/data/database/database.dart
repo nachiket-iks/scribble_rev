@@ -1,10 +1,8 @@
-import 'dart:io';
 
 import 'package:drift/drift.dart';
 import 'package:drift_flutter/drift_flutter.dart';
 import 'package:scribble/app/core/constants/app_constants.dart';
 
-import '../../domain/entities/recording.dart';
 
 part 'database.g.dart';
 
